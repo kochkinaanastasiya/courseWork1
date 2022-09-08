@@ -77,6 +77,8 @@ public class Main {
             }
             return bestSalaryCandidate;
         }
+        return bestSalaryCandidate;
+    }
 
         public static int returnAverageSalary () {
             int counter = 0;
@@ -95,4 +97,3 @@ public class Main {
         }
 
     }
-}
