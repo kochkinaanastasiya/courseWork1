@@ -1,6 +1,7 @@
 public class Main {
 
-    static Employee [] employees = new Employee[10];
+    static Employee[] employees = new Employee[10];
+
     public static void main(String[] args) {
 
         Employee employee0 = new Employee("Ivanov Ivan Ivanovich", 1, 35_000);
@@ -8,7 +9,7 @@ public class Main {
         Employee employee2 = new Employee("Shevchenko Aleksandr Aleksandrovich", 3, 50_000);
         Employee employee3 = new Employee("Yevtushenko Maxim Viktorovich", 4, 60_000);
         Employee employee4 = new Employee("Sidorov Igor Viktorovich", 5, 70_000);
-        Employee employee5 = new Employee("Ivanova Ekaterina Viktorovna", 1, 80_000);
+        Employee employee5 = null;
         Employee employee6 = new Employee("Petrova Rita Andreevna", 2, 90_000);
         Employee employee7 = new Employee("Shevchenko Eva Denisovna", 3, 100_000);
         Employee employee8 = new Employee("Yevtushenko Kristina Kirillovna", 4, 120_000);
@@ -25,23 +26,27 @@ public class Main {
         employees[8] = employee8;
         employees[9] = employee9;
 
-        printList();
-        System.out.println(sum());
+        printListEmployee();
+        System.out.println(sumCostSalary());
         System.out.println(getEmployeeWithMinSalary());
         System.out.println(getEmployeeWithMaxSalary());
-        System.out.println(averageSalary());
+        System.out.println(returnAverageSalary());
         printFullName();
     }
-    public static void printList(){
+
+    public static void printListEmployee() {
         for (int i = 0; i < employees.length; i++) {
-            System.out.println(employees[i].toString());
+            if (employees[i] != null)
+                System.out.println(employees[i]);
 
         }
     }
-    public static int sum(){
+
+    public static int sumCostSalary() {
         int sumSalary = 0;
         for (int i = 0; i < employees.length; i++) {
-            sumSalary = sumSalary + employees[i].getSalary();
+            if (employees[i] != null)
+                sumSalary = sumSalary + employees[i].getSalary();
         }
         return sumSalary;
     }
@@ -49,10 +54,12 @@ public class Main {
     public static Employee getEmployeeWithMinSalary() {
         Employee bestCandidate = employees[0];
         for (int i = 1; i < employees.length; i++) {
-            Employee currentEmployee = employees[i];
-            int currentSalary = currentEmployee.getSalary();
-            if (currentSalary < bestCandidate.getSalary()) {
-                bestCandidate = currentEmployee;
+            if (employees[i] != null) {
+                Employee currentEmployee = employees[i];
+                int currentSalary = currentEmployee.getSalary();
+                if (currentSalary < bestCandidate.getSalary()) {
+                    bestCandidate = currentEmployee;
+                }
             }
         }
         return bestCandidate;
@@ -61,22 +68,31 @@ public class Main {
     public static Employee getEmployeeWithMaxSalary() {
         Employee bestSalaryCandidate = employees[0];
         for (int i = 1; i < employees.length; i++) {
-            Employee currentEmployee = employees[i];
-            int currentSalary = currentEmployee.getSalary();
-            if (currentSalary > bestSalaryCandidate.getSalary()) {
-                bestSalaryCandidate = currentEmployee;
+            if (employees[i] != null) {
+                Employee currentEmployee = employees[i];
+                int currentSalary = currentEmployee.getSalary();
+                if (currentSalary > bestSalaryCandidate.getSalary()) {
+                    bestSalaryCandidate = currentEmployee;
+                }
+            }
+            return bestSalaryCandidate;
+        }
+
+        public static int returnAverageSalary () {
+            int counter = 0;
+            for (int i = 0; i < employees.length; i++) {
+                if (employees[i] != null)
+                    counter++;
+            }
+            return sumCostSalary() / counter;
+        }
+
+        public static void printFullName () {
+            for (int i = 0; i < employees.length; i++) {
+                if (employees[i] != null)
+                    System.out.println(employees[i].getName());
             }
         }
-        return bestSalaryCandidate;
-    }
 
-    public static int averageSalary() {
-        return sum() / employees.length;
-    }
-
-    public static void printFullName(){
-        for (int i = 0; i < employees.length; i++) {
-            System.out.println(employees[i].getName());
-        }
     }
 }
